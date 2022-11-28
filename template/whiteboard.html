@@ -4,15 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
-  <script type="text/javascript" src = "{{url_for('static', filename='whiteboard.js')}}"></script>
 </head>
 <body>
-<canvas id="gameCanvas" height="400" width="400" style="border: 1px solid black;"></canvas>
-<p id="mousedown"></p>
+<canvas id="gameCanvas" height="500" width="600" style="border: 1px solid black;"></canvas>
   <form>
   <select id="toolSelect">
     <option value = "1" selected="selected">Pen</option>
     <option value = "2">Eraser</option>
+    <option value = "3">Text</option>
+    <option value = "4">Select</option>
   </select>
   </form>
 <button onclick = "clearFunction()">clear</button>
@@ -20,4 +20,5 @@
 <p>Number of users:</p>
 <span class="users">?</span>
 </body>
+<script type="text/javascript" src = "whiteboard.js"></script>
 </html>

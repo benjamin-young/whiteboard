@@ -10,6 +10,7 @@ logging.basicConfig()
 USERS = set()
 
 VALUE = 0
+dataNum = 0
 
 def users_event():
     print(len(USERS))
@@ -19,7 +20,7 @@ def value_event():
     return json.dumps({"type": "value", "value": VALUE})
 
 async def counter(websocket):
-    global USERS, VALUE
+    global USERS, VALUE, dataNum
     try:
         # Register user
         USERS.add(websocket)
@@ -28,6 +29,7 @@ async def counter(websocket):
         await websocket.send(value_event())
         # Manage state changes
         async for message in websocket:
+            dataNum+=1
             event = json.loads(message)
             if event["action"] == "minus":
                 VALUE -= 1
@@ -37,7 +39,8 @@ async def counter(websocket):
                 websockets.broadcast(USERS, value_event())
             elif event["action"] == "draw":
                 #print("hello")
-                print(event)
+                #print(event)
+                print(dataNum)
                 websockets.broadcast(USERS, json.dumps({"action": "broadcast",
                                                         "x_1": event["x_1"], 
                                                         "y_1": event["y_1"],
