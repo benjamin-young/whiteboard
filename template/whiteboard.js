@@ -48,7 +48,7 @@ function drawLine(x1,y1,x2,y2,width, color){
   ctx.moveTo(x1, y1);
   ctx.lineTo(x2, y2);
   ctx.stroke();
-  pingServer(x1,y1,x2,y2);
+  pingServer("draw",x1,y1,x2,y2);
   ctx.fillStyle = "white";
 }
 
@@ -63,7 +63,7 @@ function addTextbox(x,y){
   textBox.focus();
   hasInput = true;
   ctx.fillStyle = "white";
-  currentTextBox = textBox;
+  currentTextBox = textBox;    
 }
 
 function drawText(txt, x, y) {
@@ -72,6 +72,7 @@ function drawText(txt, x, y) {
   ctx.font = '14px sans-serif';
   ctx.fillStyle = "black";
   ctx.fillText(txt, x - 4, y - 4);
+  pingServerText("text", x,y,txt);
 }
 
 function makeTextbox(e){
@@ -137,9 +138,17 @@ window.addEventListener("DOMContentLoaded", () => {
   };
 });
 
-async function pingServer(x1,y1,x2,y2){
-    console.log("ping")
-  responseVal = JSON.stringify({ action: "draw", x_1:x1, y_1:y1, x_2:x2, y_2:y2});
+async function pingServer(action_type,x1,y1,x2,y2){
+  console.log("ping");
+  responseVal = JSON.stringify({ action: action_type, x_1:x1, y_1:y1, x_2:x2, y_2:y2});
   console.log(responseVal);
   websocket.send(responseVal);
 }
+
+async function pingServerText(action_type, x, y, text_val){
+  responseVal = JSON.stringify({ action: action_type, x_1:x, y_1:y, text:text_val});
+  console.log(responseVal);
+  websocket.send(responseVal);
+}
+
+

@@ -11,6 +11,7 @@ USERS = set()
 
 VALUE = 0
 dataNum = 0
+whiteboardData = []
 
 def users_event():
     print(len(USERS))
@@ -37,10 +38,16 @@ async def counter(websocket):
             elif event["action"] == "plus":
                 VALUE += 1
                 websockets.broadcast(USERS, value_event())
+            elif event["action"] == "text":
+                print(dataNum)
+                print(message)
+                whiteboardData.append(message)
             elif event["action"] == "draw":
                 #print("hello")
                 #print(event)
                 print(dataNum)
+                print(message)
+                whiteboardData.append(message)
                 websockets.broadcast(USERS, json.dumps({"action": "broadcast",
                                                         "x_1": event["x_1"], 
                                                         "y_1": event["y_1"],
